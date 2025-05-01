@@ -36,6 +36,7 @@ npm install
 3. Create a `.env` file in the root directory and add your Anthropic API key:
 ```
 ANTHROPIC_API_KEY=your_api_key_here
+PORT=5000
 ```
 
 4. Run the setup script:
