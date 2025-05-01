@@ -64,13 +64,26 @@ export const getGoogleCalendarUrl = (eventData: EventData): string => {
   const start = formatGoogleDate(startDate);
   const end = formatGoogleDate(endDate);
   
-  const params = new URLSearchParams({
+  // Create params object for URL construction
+  const params: Record<string, string> = {
     action: "TEMPLATE",
     text: eventData.title,
-    dates: `${start}/${end}`,
-    details: eventData.description || "",
-    location: eventData.location || "",
-  });
+    dates: `${start}/${end}`
+  };
   
-  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+  // Only add optional fields if they exist
+  if (eventData.description) {
+    params.details = eventData.description;
+  }
+  
+  if (eventData.location) {
+    params.location = eventData.location;
+  }
+  
+  // Create the URL parameter string manually to ensure proper encoding
+  const paramString = Object.entries(params)
+    .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+    .join('&');
+  
+  return `https://calendar.google.com/calendar/u/0/r/eventedit?${paramString}`;
 };
