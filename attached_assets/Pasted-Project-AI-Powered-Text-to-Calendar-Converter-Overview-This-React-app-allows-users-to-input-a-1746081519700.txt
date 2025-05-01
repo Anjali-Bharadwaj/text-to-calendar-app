@@ -1,0 +1,101 @@
+Project: AI-Powered Text-to-Calendar Converter
+
+Overview
+
+This React app allows users to input a block of text containing event details (e.g., "Meeting with John next Monday at 2 PM") and uses an AI LLM (such as OpenAI's GPT) to extract key event information and generate a calendar invite. The invite can be downloaded as an .ics file or added to Google Calendar.
+
+
+---
+
+Requirements
+
+1. Frontend (React & TailwindCSS for styling)
+
+User Interface (UI)
+
+A simple input box (textarea) for users to enter text.
+
+A button to process the input using AI.
+
+A preview section displaying extracted event details.
+
+An option to export the event as an .ics file.
+
+A button to add to Google Calendar.
+
+
+State Management
+
+Use useState and useEffect hooks for managing input and response data.
+
+---
+
+2. AI Integration (LLM for Text Parsing)
+
+Processing User Input
+
+Use an API like OpenAI's GPT or Google’s Gemini to extract event details:
+
+Date & Time
+
+Event Title
+
+Location (if available)
+
+Description
+
+
+
+Implementation Options
+
+Use a backend (Node.js + Express) to call the AI API securely, or
+
+Call the API directly from the frontend (ensure API key safety with environment variables).
+
+
+---
+
+3. Calendar Integration
+
+Generate .ics file
+
+Use ics npm package to create an iCalendar file for download.
+
+
+Google Calendar Integration
+
+Provide a link to create an event using Google Calendar’s URL scheme:
+
+https://calendar.google.com/calendar/u/0/r/eventedit?text={title}&dates={start_date}/{end_date}&details={description}&location={location}
+
+
+---
+
+Bonus Features (Optional for Intermediate Level)
+
+Natural Language Processing Enhancements
+
+Let AI recognize multiple events from a paragraph.
+
+
+Voice Input Support
+
+Convert speech to text using Web Speech API.
+
+
+User Authentication (OAuth2 for Google Calendar API)
+
+Allow users to sign in and directly create events in their Google Calendar.
+
+---
+
+Tech Stack
+
+Frontend: React, TailwindCSS
+
+Backend (Optional): Node.js, Express
+
+AI API: OpenAI/Gemini
+
+
+Calendar Tools: ics npm package, Google Calendar API
