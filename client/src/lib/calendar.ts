@@ -54,8 +54,12 @@ export const downloadICS = (eventData: EventData): void => {
  * Generate Google Calendar URL
  */
 export const getGoogleCalendarUrl = (eventData: EventData): string => {
+  // Google Calendar expects dates in the format: YYYYMMDDTHHMMSSZ
   const formatGoogleDate = (date: Date): string => {
-    return date.toISOString().replace(/-|:|\.\d+/g, "");
+    // Need to convert to UTC string first to ensure timezone handling is correct
+    return date.toISOString()
+      .replace(/-|:|\.\d+/g, "") // Remove dashes, colons, and decimal portion
+      .replace(/(\d{8})T(\d{6}).*/, "$1T$2Z"); // Format to YYYYMMDDTHHMMSSZ
   };
   
   const startDate = new Date(eventData.dateTime.start);
@@ -64,11 +68,12 @@ export const getGoogleCalendarUrl = (eventData: EventData): string => {
   const start = formatGoogleDate(startDate);
   const end = formatGoogleDate(endDate);
   
-  // Create params object for URL construction
+  // Create params object with proper structure for Google Calendar
   const params: Record<string, string> = {
     action: "TEMPLATE",
     text: eventData.title,
-    dates: `${start}/${end}`
+    dates: `${start}/${end}`,
+    ctz: Intl.DateTimeFormat().resolvedOptions().timeZone // Add timezone info
   };
   
   // Only add optional fields if they exist
@@ -85,5 +90,5 @@ export const getGoogleCalendarUrl = (eventData: EventData): string => {
     .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
     .join('&');
   
-  return `https://calendar.google.com/calendar/u/0/r/eventedit?${paramString}`;
+  return `https://calendar.google.com/calendar/render?${paramString}`;
 };
