@@ -1,3 +1,4 @@
+
 import express from 'express';
 import { createServer } from 'http';
 import { fileURLToPath } from 'url';
@@ -14,15 +15,13 @@ const envFile = path.join(__dirname, '.env');
 const env = {};
 if (fs.existsSync(envFile)) {
   const envContent = fs.readFileSync(envFile, 'utf8');
-  envContent.split('\\n').forEach(line => {
+  envContent.split('\n').forEach(line => {
     const parts = line.split('=');
     if (parts.length === 2) {
       env[parts[0].trim()] = parts[1].trim();
     }
   });
 }
-
-console.log('Starting the server...');
 
 // Initialize Express app
 const app = express();
@@ -56,11 +55,25 @@ app.post("/api/process-event", async (req, res) => {
       });
     }
 
-    // If no API key, return error message
+    // If no API key, return mock data for testing
     if (!anthropicApiKey) {
-      console.log("No API key found, returning error");
-      return res.status(400).json({ 
-        error: "Missing ANTHROPIC_API_KEY in .env file. Please add your API key and restart the server." 
+      console.log("No API key found, returning mock data");
+      // Create tomorrow's date at 2 PM
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      tomorrow.setHours(14, 0, 0, 0);
+      
+      // End time is 1 hour later
+      const endTime = new Date(tomorrow);
+      endTime.setHours(15, 0, 0, 0);
+      
+      return res.status(200).json({
+        title: "Mock Event",
+        dateTime: {
+          start: tomorrow.toISOString(),
+          end: endTime.toISOString()
+        },
+        description: "This is a mock event. Add your ANTHROPIC_API_KEY to .env for real processing."
       });
     }
 
@@ -154,19 +167,7 @@ if (fs.existsSync(clientDir)) {
 const port = env.PORT || 5000;
 const server = createServer(app);
 
-// Important: We bind to '0.0.0.0' to allow external connections
-// This is critical for accepting connections from browsers on the same machine
 server.listen(port, '0.0.0.0', () => {
   console.log(`Server running on http://localhost:${port}`);
-  console.log(`You can also access it at http://127.0.0.1:${port}`);
   console.log('To exit, press Ctrl+C');
-});
-
-// Handle graceful shutdown
-process.on('SIGINT', () => {
-  console.log('Shutting down server...');
-  server.close(() => {
-    console.log('Server closed');
-    process.exit(0);
-  });
 });

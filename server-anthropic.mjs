@@ -14,12 +14,13 @@ const envFile = path.join(__dirname, '.env');
 const env = {};
 if (fs.existsSync(envFile)) {
   const envContent = fs.readFileSync(envFile, 'utf8');
-  envContent.split('\\n').forEach(line => {
+  envContent.split(/\r?\n/).forEach(line => {
     const parts = line.split('=');
     if (parts.length === 2) {
       env[parts[0].trim()] = parts[1].trim();
     }
   });
+  console.log('Environment variables loaded from .env file');
 }
 
 console.log('Starting the server with Anthropic integration...');
@@ -34,6 +35,7 @@ try {
   
   // Check for API key
   const anthropicApiKey = env.ANTHROPIC_API_KEY;
+  console.log('API Key found:', anthropicApiKey ? 'Yes' : 'No');
   
   if (anthropicApiKey) {
     anthropic = new Anthropic({

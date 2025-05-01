@@ -1,71 +1,94 @@
-# AI-Powered Text-to-Calendar Converter
+# Text to Calendar App
 
-This application converts natural language text descriptions into structured calendar events using Anthropic's Claude AI.
+Convert natural language text into calendar events effortlessly using AI. This application allows you to describe your events in plain English and automatically creates calendar events with accurate details.
 
-## Features
+## 🌟 Features
 
-- Extract event details (title, date, time, location) from natural language
-- Simple and intuitive user interface
-- Compatible with Windows, macOS, and Linux
-- No complex setup required
+- **Natural Language Processing**: Simply describe your event as you would to a friend
+- **AI-Powered Event Extraction**: Automatically extracts date, time, location, and description
+- **Multiple Export Options**:
+  - Direct Google Calendar integration
+  - Download as .ics file (compatible with Apple Calendar, Outlook, etc.)
+- **Modern, User-Friendly Interface**: Clean and intuitive design
+- **Real-Time Preview**: See how your event will appear before saving
 
-## Requirements
+## 🚀 Getting Started
+
+### Prerequisites
 
 - Node.js (v14 or higher)
-- Anthropic API key (optional for basic functionality)
+- NPM (v6 or higher)
+- Anthropic API key (for AI functionality)
 
-## Setup Instructions for Windows
+### Installation
 
-1. **Run the setup script**
-   ```
-   node setup-full.mjs
-   ```
-   This will create necessary files including `.env` and batch files.
+1. Clone the repository:
+```bash
+git clone [your-repository-url]
+cd text-to-calendar-app
+```
 
-2. **Configure your API key**
-   - Edit the `.env` file
-   - Replace `your_anthropic_api_key_here` with your actual Anthropic API key
+2. Install dependencies:
+```bash
+npm install
+```
 
-3. **Choose how to run the application**
+3. Create a `.env` file in the root directory and add your Anthropic API key:
+```
+ANTHROPIC_API_KEY=your_api_key_here
+```
 
-   For basic functionality without installing anything:
-   ```
-   start-app.bat
-   ```
-   OR
-   ```
-   node server-simple.mjs
-   ```
+4. Run the setup script:
+```bash
+node setup-full.mjs
+```
 
-   For full AI functionality (requires installing the SDK):
-   ```
-   npm install @anthropic-ai/sdk
-   start-app-anthropic.bat
-   ```
-   OR
-   ```
-   npm install @anthropic-ai/sdk
-   node server-anthropic.mjs
-   ```
+5. Start the application:
+```bash
+node server-anthropic.mjs
+```
 
-4. **Open in browser**
-   - Go to http://localhost:5000
+The application will be available at `http://localhost:5000`
 
-## Troubleshooting
+## 💡 Usage Examples
 
-If you encounter a "This site can't be reached" error:
-1. Make sure the server is running
-2. Try accessing the site using http://127.0.0.1:5000 instead of localhost
-3. Check if port 5000 is already in use by another application
+Here are some examples of how you can describe your events:
 
-## API Reference
+- "Meet John for coffee tomorrow at 3pm at Starbucks"
+- "Team meeting next Monday from 10am to 11:30am in the conference room"
+- "Dentist appointment on May 15th at 2:30pm at Dr. Smith's office"
+- "Weekly yoga class every Tuesday at 7am at Fitness Center"
 
-The application provides a simple API endpoint:
+## 🔧 Technical Details
 
-- `POST /api/process-event`
-  - Request body: `{ "text": "your event description" }`
-  - Response: JSON object with extracted event details
+### Stack
+- Frontend: HTML, CSS, JavaScript
+- Backend: Node.js
+- AI: Anthropic Claude API
+- Calendar Integration: Google Calendar API, iCalendar format
 
-## License
+### Architecture
+- RESTful API design
+- Modular frontend components
+- Secure API key handling
+- Cross-platform calendar compatibility
 
-MIT
+## 📝 Notes
+
+- The application uses local time for all event creation
+- Google Calendar events open in a new tab for easy adding
+- Downloaded .ics files are compatible with most calendar applications
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🙏 Acknowledgments
+
+- Powered by Anthropic's Claude AI
+- Calendar integration inspired by Google Calendar API
+- UI design based on modern web standards
