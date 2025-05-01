@@ -1,0 +1,3 @@
+@echo off
+echo Starting the application...
+node server-simple.mjs

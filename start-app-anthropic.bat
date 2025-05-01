@@ -1,0 +1,3 @@
+@echo off
+echo Starting the application with Anthropic integration...
+node server-anthropic.mjs
